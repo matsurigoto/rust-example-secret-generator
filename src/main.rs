@@ -1,4 +1,5 @@
 use inquire::{Confirm, MultiSelect, Text};
+use rand::Rng;
 
 fn main() {
     //let mut 為可更改
@@ -61,14 +62,36 @@ fn main() {
         Err(_) => println!("選擇出現錯誤"),
    }
 
-   let mut rng = rand::thread_rng();
-    let char_bytes: &[u8] = charset.as_bytes();
-    let password: String = (0..length).map(|_| {
-        let idx = rng.gen_range(0..char_bytes.len());
-        char_bytes[idx] as char
-    }).collect();
+    let mut password = generate_password(&charset, length); 
 
+    match contain_number {
+        Ok(contain) => {
+            if contain {
+                loop {
+                    let origin_result = generate_password(&charset, length);
+                    if origin_result.chars().any(|a| a.is_digit(10)) {
+                        password = origin_result;
+                        break;
+                    }
+                }
+            }
+        }
+        Err(_) => {}
+    }  
     println!("您的密碼為：{:?}", password)
+}
 
-   
+
+fn generate_password(charset: &str, length: i32) -> String {
+    let mut rng = rand::thread_rng();
+    let char_bytes: &[u8] = charset.as_bytes();
+
+    let result = (0..length)
+        .map(|_| {
+            let idx = rng.gen_range(0..char_bytes.len());
+            char_bytes[idx] as char
+        })
+        .collect();
+
+    result
 }
