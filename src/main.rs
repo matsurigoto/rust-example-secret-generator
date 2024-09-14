@@ -2,6 +2,7 @@ use inquire::{Confirm, MultiSelect, Text};
 use rand::Rng;
 
 fn main() {
+    //有分成 let 與 const
     //let mut 為可更改
     //Rust 世界多數都是不可變的
     
