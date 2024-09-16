@@ -2,7 +2,7 @@ use inquire::{Confirm, MultiSelect, Text};
 use rand::Rng;
 
 fn main() {
-    //let mut 為可更改
+    //let mut 為可更改 測試
     //Rust 世界多數都是不可變的
     
     let length_ans = Text::new("請問您的密碼長度要設定多少？").prompt();
